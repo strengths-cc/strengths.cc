@@ -3,6 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
 
 const FORMSPREE_URL = 'https://formspree.io/f/mqpqbnpn';
 
@@ -32,7 +33,6 @@ function ProfileSetupContent() {
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Block direct access unless redirected from Stripe (?signup=success)
   if (!isSuccess) {
     return (
       <div className="min-h-screen bg-[#fafaf9] text-slate-900 font-sans antialiased flex flex-col justify-between">
@@ -99,14 +99,32 @@ function ProfileSetupContent() {
     setErrorMessage('');
 
     try {
-      const response = await fetch(FORMSPREE_URL, {
+      const { error: dbError } = await supabase.from('coaches').insert([
+        {
+          name: fullName,
+          email,
+          title,
+          location,
+          specialty,
+          rate,
+          top5: selectedThemes,
+          bio,
+          approved: false,
+        },
+      ]);
+
+      if (dbError) {
+        throw new Error(dbError.message);
+      }
+
+      await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          submissionType: 'New Coach Directory Profile',
+          submissionType: 'New Coach Pending Approval in Supabase',
           fullName,
           email,
           title,
@@ -118,13 +136,9 @@ function ProfileSetupContent() {
         }),
       });
 
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        setErrorMessage('Could not submit profile. Please try again or email support.');
-      }
+      setSubmitted(true);
     } catch {
-      setErrorMessage('Network error submitting profile. Please check your connection and retry.');
+      setErrorMessage('Could not save profile to database. Please try again or contact support.');
     } finally {
       setSubmitting(false);
     }
@@ -132,7 +146,6 @@ function ProfileSetupContent() {
 
   return (
     <div className="min-h-screen bg-[#fafaf9] text-slate-900 font-sans antialiased">
-      {/* Header */}
       <header className="border-b border-slate-200/80 bg-white">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center gap-2.5">
@@ -150,7 +163,6 @@ function ProfileSetupContent() {
       </header>
 
       <main className="mx-auto max-w-3xl px-6 py-12">
-        {/* Payment Confirmation Banner */}
         <div className="mb-8 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-emerald-950">
           <p className="text-sm font-semibold">
             &#10003; Payment confirmed &mdash; Welcome to the Strengths.cc Founding Coach Directory!
@@ -169,12 +181,11 @@ function ProfileSetupContent() {
               Profile Submitted for Verification
             </h1>
             <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600">
-              Thank you, <span className="font-semibold text-slate-900">{fullName}</span>. We have
-              received your profile and will publish your directory listing within 24 hours after
-              verifying your Gallup credential.
+              Thank you, <span className="font-semibold text-slate-900">{fullName}</span>. Your
+              profile is saved in our verification queue and will automatically go live within 24
+              hours once your Gallup credential is confirmed.
             </p>
 
-            {/* Preview Card */}
             <div className="mx-auto mt-8 max-w-md rounded-2xl border border-slate-200 bg-[#fafaf9] p-6 text-left">
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
@@ -313,7 +324,6 @@ function ProfileSetupContent() {
                 </div>
               </div>
 
-              {/* Top 5 CliftonStrengths Picker */}
               <div>
                 <div className="flex items-center justify-between">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
@@ -377,7 +387,7 @@ function ProfileSetupContent() {
                 }`}
               >
                 {submitting
-                  ? 'Submitting Profile...'
+                  ? 'Saving Verified Profile...'
                   : selectedThemes.length === 5
                   ? 'Submit Verified Profile'
                   : `Select ${5 - selectedThemes.length} More Strengths to Continue`}
