@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 const FORMSPREE_URL = 'https://formspree.io/f/mqpqbnpn';
 
@@ -17,9 +18,9 @@ interface Coach {
   rate: string;
 }
 
-const COACHES: Coach[] = [
+const SAMPLE_COACHES: Coach[] = [
   {
-    id: '1',
+    id: 'sample-1',
     name: 'Elena Rostova',
     title: 'Gallup-Certified Strengths Coach',
     location: 'Seattle, WA (Remote & On-site)',
@@ -29,7 +30,7 @@ const COACHES: Coach[] = [
     rate: '$250 / session',
   },
   {
-    id: '2',
+    id: 'sample-2',
     name: 'Marcus Vance',
     title: 'Gallup-Certified Executive Coach',
     location: 'Austin, TX (Remote & On-site)',
@@ -39,7 +40,7 @@ const COACHES: Coach[] = [
     rate: '$300 / session',
   },
   {
-    id: '3',
+    id: 'sample-3',
     name: 'Sarah Jenkins',
     title: 'Senior Strengths & Revenue Strategist',
     location: 'New York, NY (Remote & On-site)',
@@ -53,14 +54,31 @@ const COACHES: Coach[] = [
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>('sales');
   const [filter, setFilter] = useState<string>('All');
+  const [coaches, setCoaches] = useState<Coach[]>(SAMPLE_COACHES);
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
   const [buyerEmail, setBuyerEmail] = useState('');
   const [buyerGoals, setBuyerGoals] = useState('');
   const [sendingInquiry, setSendingInquiry] = useState(false);
   const [inquirySent, setInquirySent] = useState(false);
 
+  useEffect(() => {
+    async function loadApprovedCoaches() {
+      const { data, error } = await supabase
+        .from('coaches')
+        .select('id, name, title, location, specialty, top5, bio, rate')
+        .eq('approved', true)
+        .order('created_at', { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        setCoaches(data as Coach[]);
+      }
+    }
+
+    loadApprovedCoaches();
+  }, []);
+
   const filteredCoaches =
-    filter === 'All' ? COACHES : COACHES.filter((c) => c.specialty === filter);
+    filter === 'All' ? coaches : coaches.filter((c) => c.specialty === filter);
 
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,7 +113,6 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-[#fafaf9] text-slate-900 font-sans antialiased">
-      {/* Top Navigation */}
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
           <button
@@ -152,7 +169,6 @@ export default function Page() {
         </div>
       </header>
 
-      {/* TAB 1: Revenue Officers & Sales Leaders */}
       {activeTab === 'sales' && (
         <main className="mx-auto max-w-5xl px-6 py-20 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
@@ -190,7 +206,6 @@ export default function Page() {
             </button>
           </div>
 
-          {/* Value Pillars */}
           <div className="mt-20 grid gap-6 text-left sm:grid-cols-3">
             <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-2xs">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600 font-bold">
@@ -228,7 +243,6 @@ export default function Page() {
         </main>
       )}
 
-      {/* TAB 2: Managers & HR Executives */}
       {activeTab === 'hr' && (
         <main className="mx-auto max-w-5xl px-6 py-20 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
@@ -262,7 +276,6 @@ export default function Page() {
         </main>
       )}
 
-      {/* TAB 3: Find a Coach Directory */}
       {activeTab === 'directory' && (
         <main className="mx-auto max-w-6xl px-6 py-16">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-8">
@@ -342,7 +355,6 @@ export default function Page() {
         </main>
       )}
 
-      {/* TAB 4: For Gallup Coaches (Stripe Membership) */}
       {activeTab === 'coaches' && (
         <main className="mx-auto max-w-4xl px-6 py-20 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
@@ -385,7 +397,6 @@ export default function Page() {
         </main>
       )}
 
-      {/* Buyer Inquiry Modal */}
       {selectedCoach && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
@@ -444,7 +455,6 @@ export default function Page() {
         </div>
       )}
 
-      {/* Footer */}
       <footer className="mt-24 border-t border-slate-200 bg-white py-10 text-center text-xs text-slate-500">
         <p>&copy; {new Date().getFullYear()} strengths.cc &mdash; CliftonStrengths&reg; is a trademark of Gallup, Inc.</p>
       </footer>
