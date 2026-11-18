@@ -4,6 +4,8 @@ import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+const FORMSPREE_URL = 'https://formspree.io/f/mqpqbnpn';
+
 const CLIFTON_THEMES = [
   'Achiever', 'Activator', 'Adaptability', 'Analytical', 'Arranger',
   'Belief', 'Command', 'Communication', 'Competition', 'Connectedness',
@@ -26,7 +28,60 @@ function ProfileSetupContent() {
   const [rate, setRate] = useState('$250 / session');
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
   const [bio, setBio] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Block direct access unless redirected from Stripe (?signup=success)
+  if (!isSuccess) {
+    return (
+      <div className="min-h-screen bg-[#fafaf9] text-slate-900 font-sans antialiased flex flex-col justify-between">
+        <header className="border-b border-slate-200/80 bg-white">
+          <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
+            <Link href="/" className="flex items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-700 font-serif text-lg font-bold text-white">
+                s
+              </span>
+              <span className="font-serif text-xl font-semibold tracking-tight text-slate-900">
+                strengths.cc
+              </span>
+            </Link>
+          </div>
+        </header>
+
+        <main className="mx-auto max-w-md px-6 py-20 text-center">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xs">
+            <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800">
+              Membership Required
+            </span>
+            <h1 className="mt-4 font-serif text-2xl font-normal text-slate-900">
+              Complete Directory Registration First
+            </h1>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Coach profile setup is unlocked immediately after completing your Founding Coach
+              Directory membership checkout.
+            </p>
+            <a
+              href="https://buy.stripe.com/5kQdR97vpcfGdPg3ZOdQQ02"
+              className="mt-6 block w-full rounded-xl bg-emerald-700 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
+            >
+              Join Directory via Stripe &rarr;
+            </a>
+            <Link
+              href="/"
+              className="mt-4 inline-block text-xs font-medium text-slate-500 hover:text-slate-800"
+            >
+              &larr; Return to Strengths.cc Home
+            </Link>
+          </div>
+        </main>
+
+        <footer className="border-t border-slate-200 bg-white py-8 text-center text-xs text-slate-500">
+          &copy; {new Date().getFullYear()} strengths.cc
+        </footer>
+      </div>
+    );
+  }
 
   const toggleTheme = (theme: string) => {
     if (selectedThemes.includes(theme)) {
@@ -36,10 +91,43 @@ function ProfileSetupContent() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedThemes.length !== 5) return;
-    setSubmitted(true);
+    if (selectedThemes.length !== 5 || submitting) return;
+
+    setSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          submissionType: 'New Coach Directory Profile',
+          fullName,
+          email,
+          title,
+          location,
+          specialty,
+          rate,
+          top5Strengths: selectedThemes.join(', '),
+          bio,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setErrorMessage('Could not submit profile. Please try again or email support.');
+      }
+    } catch {
+      setErrorMessage('Network error submitting profile. Please check your connection and retry.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -63,16 +151,14 @@ function ProfileSetupContent() {
 
       <main className="mx-auto max-w-3xl px-6 py-12">
         {/* Payment Confirmation Banner */}
-        {isSuccess && (
-          <div className="mb-8 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-emerald-950">
-            <p className="text-sm font-semibold">
-              &#10003; Payment confirmed &mdash; Welcome to the Strengths.cc Founding Coach Directory!
-            </p>
-            <p className="mt-1 text-xs text-emerald-800">
-              Complete your verified coach profile below so sales leaders and HR executives can discover you.
-            </p>
-          </div>
-        )}
+        <div className="mb-8 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-emerald-950">
+          <p className="text-sm font-semibold">
+            &#10003; Payment confirmed &mdash; Welcome to the Strengths.cc Founding Coach Directory!
+          </p>
+          <p className="mt-1 text-xs text-emerald-800">
+            Complete your verified coach profile below so sales leaders and HR executives can discover you.
+          </p>
+        </div>
 
         {submitted ? (
           <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-xs">
@@ -83,8 +169,9 @@ function ProfileSetupContent() {
               Profile Submitted for Verification
             </h1>
             <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600">
-              Thank you, <span className="font-semibold text-slate-900">{fullName}</span>. We are
-              verifying your Gallup certification and will publish your directory listing within 24 hours.
+              Thank you, <span className="font-semibold text-slate-900">{fullName}</span>. We have
+              received your profile and will publish your directory listing within 24 hours after
+              verifying your Gallup credential.
             </p>
 
             {/* Preview Card */}
@@ -126,6 +213,12 @@ function ProfileSetupContent() {
             <p className="mt-2 text-sm text-slate-600">
               This information appears on your public directory card for corporate buyers.
             </p>
+
+            {errorMessage && (
+              <div className="mt-6 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">
+                {errorMessage}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
@@ -276,14 +369,16 @@ function ProfileSetupContent() {
 
               <button
                 type="submit"
-                disabled={selectedThemes.length !== 5}
+                disabled={selectedThemes.length !== 5 || submitting}
                 className={`w-full rounded-xl py-3.5 text-sm font-semibold text-white transition ${
-                  selectedThemes.length === 5
+                  selectedThemes.length === 5 && !submitting
                     ? 'bg-emerald-700 hover:bg-emerald-800 shadow-sm'
                     : 'bg-slate-300 cursor-not-allowed'
                 }`}
               >
-                {selectedThemes.length === 5
+                {submitting
+                  ? 'Submitting Profile...'
+                  : selectedThemes.length === 5
                   ? 'Submit Verified Profile'
                   : `Select ${5 - selectedThemes.length} More Strengths to Continue`}
               </button>
