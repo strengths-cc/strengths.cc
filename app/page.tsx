@@ -375,4 +375,44 @@ export default function Page() {
                   e.preventDefault();
                   setInquirySent(true);
                 }}
-                className="
+                className="mt-4 space-y-4"
+              >
+                <div>
+                  <label className="block text-xs font-medium text-slate-700">Work Email</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@company.com"
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-700">
+                    Team Size &amp; Goals
+                  </label>
+                  <textarea
+                    required
+                    rows={3}
+                    placeholder="Tell us about your sales or leadership team..."
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-emerald-700 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
+                >
+                  Send Inquiry
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="mt-24 border-t border-slate-200 bg-white py-10 text-center text-xs text-slate-500">
+        <p>&copy; {new Date().getFullYear()} strengths.cc &mdash; CliftonStrengths&reg; is a trademark of Gallup, Inc.</p>
+      </footer>
+    </div>
+  );
+}
