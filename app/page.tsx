@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 
+const FORMSPREE_URL = 'https://formspree.io/f/mqpqbnpn';
+
 type Tab = 'sales' | 'hr' | 'directory' | 'coaches';
 
 interface Coach {
@@ -52,10 +54,44 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>('sales');
   const [filter, setFilter] = useState<string>('All');
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
+  const [buyerEmail, setBuyerEmail] = useState('');
+  const [buyerGoals, setBuyerGoals] = useState('');
+  const [sendingInquiry, setSendingInquiry] = useState(false);
   const [inquirySent, setInquirySent] = useState(false);
 
   const filteredCoaches =
     filter === 'All' ? COACHES : COACHES.filter((c) => c.specialty === filter);
+
+  const handleInquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedCoach || sendingInquiry) return;
+
+    setSendingInquiry(true);
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          submissionType: 'Corporate Buyer Coach Inquiry',
+          requestedCoach: selectedCoach.name,
+          coachSpecialty: selectedCoach.specialty,
+          buyerEmail,
+          teamGoals: buyerGoals,
+        }),
+      });
+
+      if (response.ok) {
+        setInquirySent(true);
+        setBuyerEmail('');
+        setBuyerGoals('');
+      }
+    } finally {
+      setSendingInquiry(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#fafaf9] text-slate-900 font-sans antialiased">
@@ -349,7 +385,7 @@ export default function Page() {
         </main>
       )}
 
-      {/* Simple Inquiry Modal */}
+      {/* Buyer Inquiry Modal */}
       {selectedCoach && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
@@ -367,21 +403,17 @@ export default function Page() {
 
             {inquirySent ? (
               <div className="mt-6 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-900">
-                Inquiry sent to {selectedCoach.name}. They will follow up within 1 business day.
+                Inquiry sent for {selectedCoach.name}. We will connect you within 1 business day.
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setInquirySent(true);
-                }}
-                className="mt-4 space-y-4"
-              >
+              <form onSubmit={handleInquirySubmit} className="mt-4 space-y-4">
                 <div>
                   <label className="block text-xs font-medium text-slate-700">Work Email</label>
                   <input
                     type="email"
                     required
+                    value={buyerEmail}
+                    onChange={(e) => setBuyerEmail(e.target.value)}
                     placeholder="you@company.com"
                     className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
                   />
@@ -393,15 +425,18 @@ export default function Page() {
                   <textarea
                     required
                     rows={3}
+                    value={buyerGoals}
+                    onChange={(e) => setBuyerGoals(e.target.value)}
                     placeholder="Tell us about your sales or leadership team..."
                     className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-emerald-700 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
+                  disabled={sendingInquiry}
+                  className="w-full rounded-xl bg-emerald-700 py-2.5 text-sm font-medium text-white hover:bg-emerald-800 disabled:bg-slate-300"
                 >
-                  Send Inquiry
+                  {sendingInquiry ? 'Sending...' : 'Send Inquiry'}
                 </button>
               </form>
             )}
