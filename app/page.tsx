@@ -1160,6 +1160,301 @@ export default function Page() {
             <form
               onSubmit={handleApplicationSubmit}
               className="mt-10 space-y-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10"
-            >
-              <div className="flex flex-col gap-6 border-b border-slate-100 pb-8 sm:flex-row sm:items-center">
+  <div className="flex flex-col gap-6 border-b border-slate-100 pb-8 sm:flex-row sm:items-center">
                 <div className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl border-2 border-emerald-600/30 bg-slate-100">
+                  <img
+                    src={
+                      appHeadshotUrl.trim() ||
+                      'https://placehold.co/200x200/047857/ffffff?text=Coach'
+                    }
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src =
+                        'https://placehold.co/200x200/047857/ffffff?text=Coach';
+                    }}
+                    alt="Coach Headshot Preview"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Professional Headshot URL *
+                  </label>
+                  <input
+                    type="url"
+                    required
+                    value={appHeadshotUrl}
+                    onChange={(e) => setAppHeadshotUrl(e.target.value)}
+                    placeholder="https://yourdomain.com/headshot.jpg"
+                    className="mt-3 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={appName}
+                    onChange={(e) => setAppName(e.target.value)}
+                    placeholder="e.g., Jordan Rivera"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Verification Email *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={appEmail}
+                    onChange={(e) => setAppEmail(e.target.value)}
+                    placeholder="jordan@yourpractice.com"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Headline / Title *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={appTitle}
+                    onChange={(e) => setAppTitle(e.target.value)}
+                    placeholder="e.g., Gallup Certified Strengths Coach • Sales Enablement"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Primary Corporate Focus *
+                  </label>
+                  <select
+                    value={appSpecialty}
+                    onChange={(e) =>
+                      setAppSpecialty(
+                        e.target.value as 'Sales Teams' | 'Executive & HR' | 'Enterprise'
+                      )
+                    }
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  >
+                    <option value="Sales Teams">Sales Teams</option>
+                    <option value="Executive & HR">Executive &amp; HR</option>
+                    <option value="Enterprise">Enterprise</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Location &amp; Delivery *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={appLocation}
+                    onChange={(e) => setAppLocation(e.target.value)}
+                    placeholder="e.g., Seattle, WA / Global Remote"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Languages Spoken *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={appLanguages}
+                    onChange={(e) => setAppLanguages(e.target.value)}
+                    placeholder="e.g., English, Spanish, French"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                    Scheduler / Calendar Link *
+                  </label>
+                  <input
+                    type="url"
+                    required
+                    value={appCalendarUrl}
+                    onChange={(e) => setAppCalendarUrl(e.target.value)}
+                    placeholder="https://calendly.com/your-name/intro-call"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                      Typical Engagement Fee *
+                    </label>
+                    <span className="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-600">
+                      Private &bull; Hidden on Directory
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    required
+                    value={appPrivateFee}
+                    onChange={(e) => setAppPrivateFee(e.target.value)}
+                    placeholder="e.g., $4,500 / half-day team workshop"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                  Top 5 CliftonStrengths (Comma-Separated) *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={appTop5}
+                  onChange={(e) => setAppTop5(e.target.value)}
+                  placeholder="Strategic, Achiever, Relator, Maximizer, Focus"
+                  className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                  Corporate Practice Summary *
+                </label>
+                <textarea
+                  rows={3}
+                  required
+                  value={appBio}
+                  onChange={(e) => setAppBio(e.target.value)}
+                  placeholder="Describe your corporate background, industries served, and measurable outcomes for sales or leadership teams..."
+                  className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-6">
+                <p className="text-xs font-medium text-slate-500">
+                  Gallup certification credentials are verified within 24 hours.
+                </p>
+                <button
+                  type="submit"
+                  disabled={appSubmitting}
+                  className="rounded-full bg-emerald-700 px-8 py-3.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-emerald-800 disabled:opacity-50"
+                >
+                  {appSubmitting
+                    ? 'Submitting Application...'
+                    : 'Submit Application & Proceed to Membership →'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="mt-10 rounded-3xl border-2 border-emerald-600 bg-emerald-50 p-8 text-center">
+              <h2 className="font-serif text-2xl font-extrabold text-emerald-950">
+                Application Received!
+              </h2>
+              <p className="mx-auto mt-2 max-w-lg text-sm font-medium text-emerald-900">
+                Your profile details (including headshot, languages, and scheduler link—with your engagement fee kept strictly private) have been saved. Complete your $149/year annual directory activation below or preview your listing in the directory.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+                <a
+                  href="https://buy.stripe.com/cNi7sL4jd7Zq9z03ZOdQQ02"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full bg-emerald-700 px-7 py-3.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-emerald-800"
+                >
+                  Complete $149/yr Stripe Activation &rarr;
+                </a>
+                <button
+                  type="button"
+                  onClick={() => navigateTo('directory', 'All')}
+                  className="rounded-full border border-emerald-700 bg-white px-7 py-3.5 text-xs font-extrabold text-emerald-900 transition hover:bg-emerald-100"
+                >
+                  View Directory Listing &rarr;
+                </button>
+              </div>
+            </div>
+          )}
+        </main>
+      )}
+
+      {inquiryCoach && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
+          <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-2xl font-extrabold text-slate-900">
+                Contact {inquiryCoach.name}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setInquiryCoach(null)}
+                className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                aria-label="Close modal"
+              >
+                &#10005;
+              </button>
+            </div>
+
+            {!inquirySent ? (
+              <form onSubmit={handleInquirySubmit} className="mt-5 space-y-4">
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                    Your Work Email
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={inquiryEmail}
+                    onChange={(e) => setInquiryEmail(e.target.value)}
+                    placeholder="you@company.com"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                    Team Size &amp; Goals
+                  </label>
+                  <textarea
+                    rows={3}
+                    required
+                    value={inquiryMessage}
+                    onChange={(e) => setInquiryMessage(e.target.value)}
+                    placeholder="Tell us about your team size, timeline, and goals..."
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={inquirySubmitting}
+                  className="w-full rounded-xl bg-emerald-700 py-3.5 text-sm font-extrabold text-white transition hover:bg-emerald-800 disabled:opacity-50"
+                >
+                  {inquirySubmitting ? 'Sending...' : 'Send Direct Inquiry →'}
+                </button>
+              </form>
+            ) : (
+              <div className="mt-5 rounded-2xl bg-emerald-50 p-5 text-center">
+                <p className="font-extrabold text-emerald-900">Inquiry Sent Directly!</p>
+                <p className="mt-1 text-xs text-emerald-800">
+                  Your message has been routed straight to {inquiryCoach.name}&apos;s inbox with zero middleman markup.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setInquiryCoach(null)}
+                  className="mt-4 rounded-xl bg-emerald-700 px-5 py-2 text-xs font-extrabold text-white"
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}          
