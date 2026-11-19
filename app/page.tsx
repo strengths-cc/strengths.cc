@@ -383,7 +383,7 @@ export default function Page() {
                 href={ANNUAL_STRIPE_URL}
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-8 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
               >
-                <span>Join the Directory &rarr;</span>
+                <span>Join the Directory &mdash; $149/year &rarr;</span>
               </a>
               <a
                 href="#coach-benefits"
@@ -402,8 +402,8 @@ export default function Page() {
                   Asymmetric Practice ROI
                 </span>
                 <h2 className="mt-4 font-serif text-3xl font-normal text-slate-900">
-                  One corporate client pays for your annual listing many times over—and you keep
-                  100% of the engagement.
+                  One corporate client covers your $149 annual listing 30x to 150x over—and you
+                  keep 100% of the engagement.
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600">
                   A single corporate CliftonStrengths team workshop or multi-month sales
@@ -421,7 +421,8 @@ export default function Page() {
                 </p>
                 <p className="mt-2 font-serif text-5xl font-normal text-emerald-900">100%</p>
                 <p className="mt-2 text-xs leading-relaxed text-emerald-800">
-                  Direct client contracts, direct invoicing, and zero middleman markups.
+                  Flat $149/year membership. Direct client contracts, direct invoicing, and zero
+                  middleman markups.
                 </p>
               </div>
             </div>
@@ -569,4 +570,226 @@ export default function Page() {
               <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
                 Simple Onboarding
               </p>
-              <h2 className="mt-2 font-serif text-3xl font
+              <h2 className="mt-2 font-serif text-3xl font-normal text-slate-900">
+                Publish your verified profile in under 24 hours
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200 bg-white p-7">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-700 text-xs font-bold text-white">
+                  1
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Activate Annual Listing
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Complete your $149/year checkout via Stripe and proceed immediately to the
+                  profile builder.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-7">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-700 text-xs font-bold text-white">
+                  2
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Build Your Specialist Profile
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Add your Top 5 CliftonStrengths, corporate focus area, workshop/session rate,
+                  and track record.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-7">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-700 text-xs font-bold text-white">
+                  3
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Get Verified &amp; Receive Inquiries
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  We verify your Gallup certification within 24 hours, publish your listing, and
+                  route corporate leads straight to your inbox.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Annual Membership Offer Card */}
+          <section id="membership-plan" className="mt-24">
+            <div className="mx-auto max-w-xl rounded-3xl border-2 border-emerald-700 bg-white p-8 shadow-md sm:p-10">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
+                  Annual Directory Membership
+                </span>
+                <span className="text-xs font-semibold text-emerald-700">
+                  0% Commission &bull; Keep 100% of Fees
+                </span>
+              </div>
+
+              <div className="mt-5 flex items-baseline gap-2">
+                <span className="font-serif text-5xl font-normal text-slate-900">$149</span>
+                <span className="text-sm font-medium text-slate-500">/ year</span>
+              </div>
+
+              <h2 className="mt-3 font-serif text-2xl font-normal text-slate-900">
+                Verified Gallup Certified Strengths Coach Listing
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                Full-year visibility in front of corporate sales and HR leaders—paid for many
+                times over by a single team workshop or leadership engagement.
+              </p>
+
+              <ul className="mt-6 space-y-3 border-t border-slate-100 pt-6 text-sm text-slate-700">
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-700">&#10003;</span>
+                  <span>
+                    <strong>Verified Gallup Certified Strengths Coach Badge</strong> that builds
+                    instant trust with corporate decision-makers
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-700">&#10003;</span>
+                  <span>
+                    <strong>Top 5 CliftonStrengths &amp; Corporate Specialty Filtering</strong> so
+                    ideal B2B buyers find you fast
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-700">&#10003;</span>
+                  <span>
+                    <strong>Direct Buyer Inquiries</strong> routed straight to you with zero
+                    middleman markups or contract restrictions
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-700">&#10003;</span>
+                  <span>
+                    <strong>Uninterrupted 12-Month Search Presence</strong> across Sales Teams,
+                    Executive &amp; HR, and Enterprise filters
+                  </span>
+                </li>
+              </ul>
+
+              <a
+                href={ANNUAL_STRIPE_URL}
+                className="mt-8 block w-full rounded-xl bg-emerald-700 py-4 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+              >
+                Join Annual Directory ($149/yr) &amp; Set Up Profile &rarr;
+              </a>
+              <p className="mt-3 text-center text-xs text-slate-500">
+                Immediate access to the profile builder right after Stripe checkout.
+              </p>
+            </div>
+          </section>
+
+          {/* Coach FAQ */}
+          <section className="mx-auto mt-24 max-w-3xl">
+            <h2 className="text-center font-serif text-3xl font-normal text-slate-900">
+              Frequently Asked Questions
+            </h2>
+
+            <div className="mt-10 space-y-4">
+              <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h3 className="text-base font-semibold text-slate-900">
+                  Who is eligible to list on Strengths.cc?
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Only accredited Gallup Certified Strengths Coaches in good standing. During
+                  onboarding, you provide your Gallup-registered email so we can verify your
+                  credential before publishing your profile.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h3 className="text-base font-semibold text-slate-900">
+                  Do you take a percentage of my coaching or workshop fees?
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Never. Beyond your flat $149/year directory membership, you contract directly
+                  with the corporate buyer, invoice them through your own business, and retain
+                  100% of every workshop, coaching engagement, and follow-on retainer.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h3 className="text-base font-semibold text-slate-900">
+                  What if I deliver both remote and on-site corporate workshops?
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  You can list your home metro area alongside remote availability (for example,
+                  &ldquo;Chicago, IL — Remote &amp; On-site&rdquo;) so both local organizations and
+                  distributed teams can connect with you.
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+      )}
+
+      {selectedCoach && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-slate-900">
+                Contact {selectedCoach.name}
+              </h3>
+              <button
+                onClick={() => setSelectedCoach(null)}
+                className="text-sm text-slate-400 hover:text-slate-700"
+              >
+                Close
+              </button>
+            </div>
+
+            {inquirySent ? (
+              <div className="mt-6 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-900">
+                Inquiry sent for {selectedCoach.name}. We will connect you within 1 business day.
+              </div>
+            ) : (
+              <form onSubmit={handleInquirySubmit} className="mt-4 space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-slate-700">Work Email</label>
+                  <input
+                    type="email"
+                    required
+                    value={buyerEmail}
+                    onChange={(e) => setBuyerEmail(e.target.value)}
+                    placeholder="you@company.com"
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-700">
+                    Team Size &amp; Goals
+                  </label>
+                  <textarea
+                    required
+                    rows={3}
+                    value={buyerGoals}
+                    onChange={(e) => setBuyerGoals(e.target.value)}
+                    placeholder="Tell us about your sales or leadership team..."
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={sendingInquiry}
+                  className="w-full rounded-xl bg-emerald-700 py-2.5 text-sm font-medium text-white hover:bg-emerald-800 disabled:bg-slate-300"
+                >
+                  {sendingInquiry ? 'Sending...' : 'Send Inquiry'}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      <footer className="mt-24 border-t border-slate-200 bg-white py-10 text-center text-xs text-slate-500">
+        <p>&copy; {new Date().getFullYear()} strengths.cc &mdash; CliftonStrengths&reg; is a trademark of Gallup, Inc.</p>
+      </footer>
+    </div>
+  );
+}
