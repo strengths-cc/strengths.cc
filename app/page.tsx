@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 const FORMSPREE_URL = 'https://formspree.io/f/mqpqbnpn';
 const ANNUAL_STRIPE_URL = 'https://buy.stripe.com/cNi7sL4jd7Zq9z03ZOdQQ02';
 
-type Tab = 'sales' | 'hr' | 'directory' | 'coaches';
+type Tab = 'home' | 'sales' | 'hr' | 'directory' | 'coaches';
 
 interface Coach {
   id: string;
@@ -53,7 +53,7 @@ const SAMPLE_COACHES: Coach[] = [
 ];
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState<Tab>('sales');
+  const [activeTab, setActiveTab] = useState<Tab>('home');
   const [filter, setFilter] = useState<string>('All');
   const [coaches, setCoaches] = useState<Coach[]>(SAMPLE_COACHES);
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
@@ -117,7 +117,7 @@ export default function Page() {
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
           <button
-            onClick={() => setActiveTab('sales')}
+            onClick={() => setActiveTab('home')}
             className="flex items-center gap-2.5 text-left"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-700 font-serif text-lg font-bold text-white">
@@ -170,52 +170,220 @@ export default function Page() {
         </div>
       </header>
 
+      {/* BOLD HOME PAGE */}
+      {activeTab === 'home' && (
+        <main className="mx-auto max-w-6xl px-6 py-20">
+          <section className="mx-auto max-w-4xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
+              <span>Evidence-Based Organizational Performance</span>
+            </div>
+
+            <h1 className="mx-auto mt-8 font-serif text-4xl leading-tight font-normal tracking-tight text-slate-900 sm:text-6xl">
+              Stop fixing weaknesses.{' '}
+              <span className="underline decoration-emerald-400 decoration-2 underline-offset-8">
+                Scale what your people naturally do best.
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+              Traditional corporate training forces every employee into the same rigid mold—and
+              wastes millions in lost productivity and turnover. Strengths-based development
+              aligns daily execution with innate human talent, guided by verified{' '}
+              <strong className="font-semibold text-slate-900">
+                Gallup Certified Strengths Coaches
+              </strong>
+              .
+            </p>
+          </section>
+
+          {/* Two Core Pathways: Sales vs. HR */}
+          <section className="mt-16 grid gap-8 md:grid-cols-2">
+            {/* Pathway 1: Revenue & Sales Leaders */}
+            <div className="flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs transition hover:border-emerald-600/60 hover:shadow-md sm:p-10">
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
+                    For CROs, VPs of Sales &amp; Enablement
+                  </span>
+                  <span className="text-xs font-bold text-emerald-700">+19% Sales Lift</span>
+                </div>
+
+                <h2 className="mt-5 font-serif text-3xl font-normal text-slate-900">
+                  Revenue Officers &amp; Sales Leaders
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  Rigid talk tracks and one-size-fits-all playbooks stall quota attainment. Discover
+                  how strengths-based sales coaching helps every rep win deals using their natural
+                  selling DNA—accelerating ramp time and retaining top performers.
+                </p>
+
+                <ul className="mt-6 space-y-2.5 border-t border-slate-100 pt-6 text-sm text-slate-700">
+                  <li className="flex items-start gap-2.5">
+                    <span className="font-bold text-emerald-700">&#10003;</span>
+                    <span>Replace generic scripts with theme-aligned deal execution</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="font-bold text-emerald-700">&#10003;</span>
+                    <span>Cut new-hire AE ramp time and raise pipeline conversion</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="font-bold text-emerald-700">&#10003;</span>
+                    <span>Reduce costly sales floor attrition by up to 72%</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('sales')}
+                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+              >
+                <span>Explore Strengths for Sales Teams</span>
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </div>
+
+            {/* Pathway 2: Managers & HR Executives */}
+            <div className="flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs transition hover:border-emerald-600/60 hover:shadow-md sm:p-10">
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
+                    For CHROs, People Ops &amp; Department Heads
+                  </span>
+                  <span className="text-xs font-bold text-emerald-700">+29% Profit Lift</span>
+                </div>
+
+                <h2 className="mt-5 font-serif text-3xl font-normal text-slate-900">
+                  Managers &amp; HR Executives
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  Annual engagement surveys don&apos;t fix manager burnout or cross-functional
+                  friction. Equip frontline managers and leadership teams with a shared
+                  CliftonStrengths operating language that drives accountability and retention.
+                </p>
+
+                <ul className="mt-6 space-y-2.5 border-t border-slate-100 pt-6 text-sm text-slate-700">
+                  <li className="flex items-start gap-2.5">
+                    <span className="font-bold text-emerald-700">&#10003;</span>
+                    <span>Turn overwhelmed managers into high-trust talent multipliers</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="font-bold text-emerald-700">&#10003;</span>
+                    <span>Eliminate team silos during rapid growth or reorgs</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="font-bold text-emerald-700">&#10003;</span>
+                    <span>Deploy high-impact offsites and leadership workshops</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('hr')}
+                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 py-4 text-sm font-semibold text-white transition hover:bg-emerald-800"
+              >
+                <span>Explore Strengths for HR &amp; Managers</span>
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </div>
+          </section>
+
+          {/* Gallup Meta-Analysis Proof Bar */}
+          <section className="mt-20 rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs sm:p-10">
+            <p className="text-center text-xs font-semibold uppercase tracking-widest text-slate-400">
+              Gallup CliftonStrengths Global Meta-Analysis Benchmarks
+            </p>
+            <div className="mt-8 grid gap-8 text-center sm:grid-cols-3">
+              <div>
+                <p className="font-serif text-4xl font-normal text-slate-900 sm:text-5xl">19%</p>
+                <p className="mt-2 text-sm font-semibold text-slate-900">Higher Sales Revenue</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  Across teams receiving strengths-based coaching
+                </p>
+              </div>
+              <div>
+                <p className="font-serif text-4xl font-normal text-emerald-700 sm:text-5xl">29%</p>
+                <p className="mt-2 text-sm font-semibold text-slate-900">Increased Profit</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  Driven by higher engagement and role alignment
+                </p>
+              </div>
+              <div>
+                <p className="font-serif text-4xl font-normal text-slate-900 sm:text-5xl">72%</p>
+                <p className="mt-2 text-sm font-semibold text-slate-900">Lower Turnover</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  In high-turnover organizations adopting strengths
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-slate-100 pt-6 text-center">
+              <button
+                onClick={() => {
+                  setFilter('All');
+                  setActiveTab('directory');
+                }}
+                className="text-sm font-semibold text-emerald-700 hover:text-emerald-800"
+              >
+                Or browse all verified Gallup Certified Strengths Coaches &rarr;
+              </button>
+            </div>
+          </section>
+        </main>
+      )}
+
+      {/* ROBUST SALES LEADERS PAGE */}
       {activeTab === 'sales' && (
-        <main className="mx-auto max-w-5xl px-6 py-20 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
-            <span>Gallup CliftonStrengths Meta-Analysis Findings</span>
-          </div>
+        <main className="mx-auto max-w-6xl px-6 py-20">
+          {/* Sales Hero */}
+          <section className="mx-auto max-w-4xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
+              <span>For Chief Revenue Officers, VPs of Sales &amp; Enablement Leaders</span>
+            </div>
 
-          <h1 className="mx-auto mt-8 max-w-4xl font-serif text-4xl leading-tight font-normal tracking-tight text-slate-900 sm:text-6xl">
-            Strengths-based sales development drives{' '}
-            <span className="underline decoration-emerald-400 decoration-2 underline-offset-8">
-              19% higher sales revenue.
-            </span>
-          </h1>
+            <h1 className="mx-auto mt-8 font-serif text-4xl leading-tight font-normal tracking-tight text-slate-900 sm:text-6xl">
+              Strengths-based sales development drives{' '}
+              <span className="underline decoration-emerald-400 decoration-2 underline-offset-8">
+                19% higher sales revenue.
+              </span>
+            </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Deploy Gallup Certified Strengths Coaches to transform sales team performance. Stop
-            forcing rigid sales scripts and harness individual natural talent.
-          </p>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+              Most sales enablement programs fail because they force analytical, relationship-led,
+              and competitive reps to sell the exact same way. Deploy Gallup Certified Strengths
+              Coaches to turn each rep&apos;s natural talent into repeatable pipeline and closed
+              revenue.
+            </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <button
-              onClick={() => {
-                setFilter('Sales Teams');
-                setActiveTab('directory');
-              }}
-              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
-            >
-              <span>Find a Sales Strengths Coach</span>
-              <span aria-hidden="true">&rarr;</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('coaches')}
-              className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-7 py-3.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-            >
-              <span>List Your Coaching Practice</span>
-            </button>
-          </div>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <button
+                onClick={() => {
+                  setFilter('Sales Teams');
+                  setActiveTab('directory');
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
+              >
+                <span>Find a Sales Strengths Coach</span>
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+              <a
+                href="#sales-problems"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-7 py-3.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              >
+                <span>See How It Solves Quota Gaps</span>
+              </a>
+            </div>
+          </section>
 
-          <div className="mt-20 grid gap-6 text-left sm:grid-cols-3">
+          {/* Key Metrics */}
+          <section className="mt-20 grid gap-6 sm:grid-cols-3">
             <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-2xs">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600 font-bold">
                 19%
               </div>
               <h3 className="mt-5 text-lg font-semibold text-slate-900">Higher Sales Revenue</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Sales teams that receive strengths-based coaching consistently outperform quota
-                compared to one-size-fits-all training.
+                Sales teams coached around individual CliftonStrengths themes consistently
+                outperform quota compared to uniform methodology rollouts.
               </p>
             </div>
 
@@ -225,8 +393,8 @@ export default function Page() {
               </div>
               <h3 className="mt-5 text-lg font-semibold text-slate-900">Increased Profit</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Aligning deal strategy with each rep&apos;s top CliftonStrengths themes reduces
-                ramp time and boosts win rates.
+                Matching prospecting, discovery, and closing motions to rep strengths eliminates
+                wasted activity and improves win rates.
               </p>
             </div>
 
@@ -236,47 +404,292 @@ export default function Page() {
               </div>
               <h3 className="mt-5 text-lg font-semibold text-slate-900">Lower Rep Turnover</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Retain top performers by coaching managers to lead around natural selling styles
-                rather than micromanaging.
+                Stop losing mid-tier and top AEs to burnout by equipping frontline sales managers
+                to coach each rep&apos;s natural selling edge.
               </p>
             </div>
-          </div>
+          </section>
+
+          {/* The 3 Revenue Problems Solved */}
+          <section id="sales-problems" className="mt-24">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+                Solving Revenue Bottlenecks
+              </p>
+              <h2 className="mt-2 font-serif text-3xl font-normal text-slate-900 sm:text-4xl">
+                Why standard sales training stalls—and how strengths coaching fixes it
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xs">
+                <span className="inline-flex rounded-lg bg-rose-50 px-3 py-1 text-xs font-bold text-rose-700">
+                  Problem 01 &bull; Rigid Scripts
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Forcing AEs to Sound Like Someone Else
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  When an <em>Analytical + Relator</em> rep is forced to use a high-pressure
+                  challenger script, buyers sense the friction immediately. Strengths coaching
+                  translates your sales process into authentic talk tracks for every rep profile.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xs">
+                <span className="inline-flex rounded-lg bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
+                  Problem 02 &bull; Slow Ramp Time
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  6–9 Months Before New Hires Produce
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  New AEs waste quarters trying to copy the top rep&apos;s style instead of
+                  activating their own. Mapping Top 5 CliftonStrengths during onboarding gives
+                  managers an immediate blueprint to accelerate first-deal velocity.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xs">
+                <span className="inline-flex rounded-lg bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                  Problem 03 &bull; Generic 1:1 Coaching
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Pipeline Reviews Instead of Skill Development
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  Frontline sales managers default to inspecting CRM stages because they lack a
+                  diagnostic framework for human behavior. Certified coaches give managers
+                  practical, theme-specific coaching plays for stuck deals.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* How Different Strengths Win Deals */}
+          <section className="mt-24 rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs sm:p-12">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+                Talent-Led Selling in Action
+              </p>
+              <h2 className="mt-2 font-serif text-3xl font-normal text-slate-900">
+                Different CliftonStrengths win the same enterprise deal differently
+              </h2>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-6">
+                <p className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+                  Strategic + Analytical + Learner
+                </p>
+                <h3 className="mt-2 text-base font-semibold text-slate-900">
+                  The Consultative Architect
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Wins complex multi-stakeholder deals through deep industry insight, business
+                  case rigor, and anticipating CFO objections before they arise.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-6">
+                <p className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+                  Relator + Individualization + Empathy
+                </p>
+                <h3 className="mt-2 text-base font-semibold text-slate-900">
+                  The Champion Builder
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Uncovers hidden buying committee dynamics, builds high-trust executive sponsors,
+                  and drives high net-dollar expansion post-sale.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-6">
+                <p className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+                  Activator + Competition + Command
+                </p>
+                <h3 className="mt-2 text-base font-semibold text-slate-900">
+                  The Momentum Closer
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Creates urgency in stalled evaluations, navigates procurement roadblocks
+                  decisively, and thrives in high-velocity new-logo acquisition.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 text-center">
+              <button
+                onClick={() => {
+                  setFilter('Sales Teams');
+                  setActiveTab('directory');
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-8 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+              >
+                <span>Connect With a Sales Strengths Coach &rarr;</span>
+              </button>
+            </div>
+          </section>
         </main>
       )}
 
+      {/* ROBUST HR & MANAGERS PAGE */}
       {activeTab === 'hr' && (
-        <main className="mx-auto max-w-5xl px-6 py-20 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
-            <span>Enterprise Talent &amp; People Strategy</span>
-          </div>
+        <main className="mx-auto max-w-6xl px-6 py-20">
+          {/* HR Hero */}
+          <section className="mx-auto max-w-4xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
+              <span>For CHROs, VPs of People, L&amp;D Leaders &amp; Department Heads</span>
+            </div>
 
-          <h1 className="mx-auto mt-8 max-w-4xl font-serif text-4xl leading-tight font-normal tracking-tight text-slate-900 sm:text-6xl">
-            Build high-engagement teams grounded in{' '}
-            <span className="underline decoration-emerald-400 decoration-2 underline-offset-8">
-              verified Gallup coaches.
-            </span>
-          </h1>
+            <h1 className="mx-auto mt-8 font-serif text-4xl leading-tight font-normal tracking-tight text-slate-900 sm:text-6xl">
+              Build high-engagement teams grounded in{' '}
+              <span className="underline decoration-emerald-400 decoration-2 underline-offset-8">
+                verified Gallup coaches.
+              </span>
+            </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Connect directly with credentialed CliftonStrengths facilitators for team offsites,
-            manager workshops, and leadership development.
-          </p>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+              70% of the variance in team engagement comes down to the manager. Partner directly
+              with accredited Gallup Certified Strengths Coaches to upskill frontline leaders,
+              resolve cross-functional friction, and retain top talent.
+            </p>
 
-          <div className="mt-10">
-            <button
-              onClick={() => {
-                setFilter('Executive & HR');
-                setActiveTab('directory');
-              }}
-              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
-            >
-              <span>Browse Executive &amp; HR Coaches</span>
-              <span aria-hidden="true">&rarr;</span>
-            </button>
-          </div>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <button
+                onClick={() => {
+                  setFilter('Executive & HR');
+                  setActiveTab('directory');
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
+              >
+                <span>Browse Executive &amp; HR Coaches</span>
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+              <a
+                href="#hr-challenges"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-7 py-3.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              >
+                <span>Explore People &amp; Culture Solutions</span>
+              </a>
+            </div>
+          </section>
+
+          {/* The 3 People & Leadership Challenges Solved */}
+          <section id="hr-challenges" className="mt-24">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+                Practical People Strategy
+              </p>
+              <h2 className="mt-2 font-serif text-3xl font-normal text-slate-900 sm:text-4xl">
+                Solving the people challenges HR leaders face every quarter
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xs">
+                <span className="inline-flex rounded-lg bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                  Challenge 01 &bull; Manager Effectiveness
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Promoted Individual Contributors Struggling to Lead
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  New managers often micromanage because they try to make direct reports work the
+                  way they did. Strengths coaching teaches managers how to delegate, motivate,
+                  and give feedback tailored to each employee&apos;s Top 5 themes.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xs">
+                <span className="inline-flex rounded-lg bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                  Challenge 02 &bull; Team Silos &amp; Friction
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  Misaligned Execution Across Departments
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  When <em>Ideation + Activator</em> product leaders clash with{' '}
+                  <em>Deliberative + Consistency</em> operations teams, projects stall. A
+                  facilitated team grid reframes friction into complementary partnerships.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xs">
+                <span className="inline-flex rounded-lg bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                  Challenge 03 &bull; Regrettable Attrition
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                  High Performers Disengaging After Reorgs
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  Employees who use their strengths every day are 6x more likely to be engaged at
+                  work. Strengths-based role alignment keeps top talent energized without
+                  inflating compensation bands.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Engagement Formats */}
+          <section className="mt-24 rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs sm:p-12">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+                Flexible Delivery Models
+              </p>
+              <h2 className="mt-2 font-serif text-3xl font-normal text-slate-900">
+                How HR &amp; People teams deploy Strengths.cc coaches
+              </h2>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-6">
+                <h3 className="text-base font-semibold text-slate-900">
+                  Half-Day &amp; Full-Day Team Offsites
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Interactive on-site or virtual workshops that map your entire team&apos;s 34
+                  CliftonStrengths domains, uncover blind spots, and establish working agreements.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-6">
+                <h3 className="text-base font-semibold text-slate-900">
+                  Manager Cohort Enablement
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Multi-session leadership cohorts equipping people managers to run strength-based
+                  1:1s, career development conversations, and performance check-ins.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-6">
+                <h3 className="text-base font-semibold text-slate-900">
+                  1:1 Executive &amp; VP Coaching
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Confidential Full-34 CliftonStrengths debriefs and ongoing advisory for C-suite
+                  leaders, founders, and newly promoted executives.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 text-center">
+              <button
+                onClick={() => {
+                  setFilter('Executive & HR');
+                  setActiveTab('directory');
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-8 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+              >
+                <span>Browse Executive &amp; HR Coaches &rarr;</span>
+              </button>
+            </div>
+          </section>
         </main>
       )}
 
+      {/* DIRECTORY PAGE */}
       {activeTab === 'directory' && (
         <main className="mx-auto max-w-6xl px-6 py-16">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-8">
@@ -356,9 +769,9 @@ export default function Page() {
         </main>
       )}
 
+      {/* FOR GALLUP COACHES LANDING PAGE */}
       {activeTab === 'coaches' && (
         <main className="mx-auto max-w-6xl px-6 py-16">
-          {/* Differentiation-First Hero Section */}
           <section className="mx-auto max-w-4xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-800">
               <span>Credential-Verified Corporate Directory</span>
@@ -394,7 +807,6 @@ export default function Page() {
             </div>
           </section>
 
-          {/* Corporate Engagement ROI Callout */}
           <section className="mt-20 rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs sm:p-12">
             <div className="grid items-center gap-8 md:grid-cols-3">
               <div className="md:col-span-2">
@@ -428,7 +840,6 @@ export default function Page() {
             </div>
           </section>
 
-          {/* 4 Differentiation & Benefit Pillars */}
           <section id="coach-benefits" className="mt-24">
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
@@ -499,7 +910,6 @@ export default function Page() {
             </div>
           </section>
 
-          {/* Comparison Table */}
           <section className="mt-24 rounded-3xl border border-slate-200 bg-white p-8 shadow-2xs sm:p-12">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-serif text-3xl font-normal text-slate-900">
@@ -564,7 +974,6 @@ export default function Page() {
             </div>
           </section>
 
-          {/* 3-Step Process */}
           <section className="mt-24">
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
@@ -617,7 +1026,6 @@ export default function Page() {
             </div>
           </section>
 
-          {/* Annual Membership Offer Card */}
           <section id="membership-plan" className="mt-24">
             <div className="mx-auto max-w-xl rounded-3xl border-2 border-emerald-700 bg-white p-8 shadow-md sm:p-10">
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -685,7 +1093,6 @@ export default function Page() {
             </div>
           </section>
 
-          {/* Coach FAQ */}
           <section className="mx-auto mt-24 max-w-3xl">
             <h2 className="text-center font-serif text-3xl font-normal text-slate-900">
               Frequently Asked Questions
