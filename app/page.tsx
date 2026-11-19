@@ -1159,8 +1159,8 @@ export default function Page() {
           {!appSubmitted ? (
    <form
   onSubmit={handleApplicationSubmit}
-  className="mt-10 space-y-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
->
+  className="mt-10 space-y-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10"
+     >
   <div className="flex flex-col gap-6 border-b border-slate-100 pb-8 sm:flex-row sm:items-center">
                 <div className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl border-2 border-emerald-600/30 bg-slate-100">
                   <img
